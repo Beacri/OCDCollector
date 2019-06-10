@@ -106,7 +106,7 @@ function OCDCollectorScan()
 			end
 		end
 	end
-	table.insert(OCDCollector.SUM, {Name = "Recipes", Icon1 = "esoui/art/icons/poi/poi_crafting_incomplete.dds", Icon2 = "esoui/art/tutorial/poi_crafting_complete.dds", Icon3 = "", Val = KnownRecipes, Max = MaxRecipes })
+	table.insert(OCDCollector.SUM, {Name = "Recipes", Icon1 = "esoui/art/journal/journal_tabicon_cadwell_up.dds", Icon2 = "esoui/art/journal/journal_tabicon_cadwell_over.dds", Icon3 = "esoui/art/journal/journal_tabicon_cadwell_down.dds", Val = KnownRecipes, Max = MaxRecipes })
 	--d("Recipes: "..KnownRecipes.." / "..MaxRecipes)
 
 --** CPs
