@@ -390,15 +390,40 @@ function OCDCollector.HideCollectibles()
 	OCDDash:SetHidden(true)
 end
 
+function OCDCollector.SaveSettings()
+	OCDCollector.savedVariables.Left = -1 * GuiRoot:GetRight() + OCDShort:GetRight()
+	OCDCollector.savedVariables.Top = OCDShort:GetTop()
+	d("**onExit")
+	d(GuiRoot:GetRight() - OCDShort:GetRight())
+
+end
+function OCDCollectorLoadSettings()
+	OCDShort:ClearAnchors()
+	OCDShort:SetAnchor(TOPRIGHT, GuiRoot, TOPRIGHT, OCDCollector.savedVariables.Left, OCDCollector.savedVariables.Top)
+
+end
 
 function OCDCollector.OnAddOnLoaded(event, addonName)
 	if (addonName ~= "OCDCollector") then return end
 		d("OCD Collector started")
+
+		OCDCollector.savedVariables = ZO_SavedVars:NewAccountWide("OCDCollector", 1, nil, {i=1})
+		
+		d(OCDCollector.savedVariables.i)
+		
+		OCDCollector.savedVariables.i = OCDCollector.savedVariables.i +1 
+		d(OCDCollector.savedVariables.i)
+		d("------")
+		d(OCDCollector.savedVariables.Left)
+		d(OCDCollector.savedVariables.Top)
+		
+		OCDCollectorLoadSettings()
 		OCDCollectorScan()
 		OCDCollectorBuildAddonSettingsMenu()
 		d("OCD Collector finished")
 end
 
+EVENT_MANAGER:RegisterForEvent(OCDCollector.name, EVENT_PLAYER_DEACTIVATED , OCDCollector.SaveSettings)
 EVENT_MANAGER:RegisterForEvent(OCDCollector.name, EVENT_ADD_ON_LOADED, OCDCollector.OnAddOnLoaded)
 SLASH_COMMANDS["/ocd"] = OCDCollector.ShowCollectibles
 SLASH_COMMANDS["/oscan"] = OCDCollectorScan
