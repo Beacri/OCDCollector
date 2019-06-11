@@ -8,18 +8,24 @@
     </Controls>
   </Button>
 
-  <Button name="OCDMenu" virtual="true">
+<!--   <Button name="LeftCat" virtual="true">
     <Dimensions x="60" y="20" />
-    <!-- <Anchor point="TOPLEFT" relativeTo="$(parent)TEXTX3" relativePoint="BOTTOMLEFT" /> -->
-
+    <Label name="$(parent)Label" text="Label" font="ZoFontGame"></Label>
     <Controls>
       <Label name="$(parent)_Label" font="ZoFontGame" text="Click me #4">
-        <!-- <Anchor point="TOPLEFT" relativeTo="$(parent)TEXTX3" relativePoint="TOPLEFT" /> -->
       </Label>
     </Controls>
-    <!-- Textures - mouseOverColor?-->
-    <OnClicked>d("x")</OnClicked><!-- Work if You dont click exactly -->
-  </Button>
+  </Button> -->
+
+    <Control name="LeftCat" virtual="true">
+      <Controls>
+        <Button name="$(parent)Icon">
+          <Dimensions x="40" y="40" />
+          <Textures normal="esoui/art/treeicons/achievements_indexicon_champion_up.dds"/>
+        </Button>
+        <Label name="$(parent)Label" font="ZoFontChat"></Label>
+      </Controls>
+    </Control>
 
 
 
@@ -51,99 +57,25 @@
           <Anchor point="BOTTOMRIGHT" relativeTo="$(parent)" relativePoint="BOTTOM" />
         </Backdrop>
 
-        <!-- <Label name="$(parent)TestA" font="ZoFontAnnounceMedium" text="TESTA1"><Anchor point="TOPLEFT" relativeTo="$(parent)Left" relativePoint="TOPLEFT" /></Label> -->
-        <!--<Label name="$(parent)TestB" font="ZoFontAnnounceMedium" text="TESTB1"><Anchor point="TOPLEFT" relativeTo="$(parent)A" relativePoint="BOTTOMLEFT" /></Label><!-- Not proper positioning -->
-        <!--<Label name="$(parent)TestC" font="ZoFontAnnounceMedium" text="TESTC1"><Anchor point="TOPLEFT" relativeTo="$(parent)B" relativePoint="BOTTOMLEFT" /></Label><!-- Not proper positioning -->
-
-
-
-        <Button name="$(parent)TEXTX">
-          <Dimensions x="20" y="20" />
-          <Anchor point="TOPLEFT" relativeTo="$(parent)Left" relativePoint="TOPLEFT" />
-
-          <Controls>
-            <Label name="TESTXY" font="ZoFontGame" text="Click me.">
-              <Anchor point="TOPLEFT" relativeTo="$(parent)Left" relativePoint="TOPLEFT" />
-            </Label>
-          </Controls>
-          <!-- Textures - mouseOverColor?-->
-          <OnClicked>
-
-            d('Clicked')
-            OCDCollectorSpanCat()
-
-
-          </OnClicked><!-- Work if You dont click exactly -->
-<!--          
-
- local last = "OCDDashLeft"
-   for i = 1, 3 do
-    d(i)
-    d(last)
-    local dynC = CreateControlFromVirtual("ABCDE", OCDDashLeft, "DynamicButton", i)
-    dynC:SetText("TEST string #"..i)
-
-    d(dynC)
-      last = dynC
-    dynC:SetText("TEST string #"..i)
-  end
-
-
- if i==1 then
-        dynC:SetAnchor(TOPLEFT, last, TOPLEFT, 0, 0)
-        dynC:SetAnchor(TOPRIGHT, last, TOPRIGHT, 0, 0)
-      else
-        dynC:SetAnchor(TOPLEFT, last, BOTTOMLEFT, 0, 0)
-        dynC:SetAnchor(TOPRIGHT, last, BOTTOMRIGHT, 0, 0)
-      end -->
-
-        </Button>
-
-        <Button name="$(parent)TEXTX2">
-          <Dimensions x="20" y="20" />
-          <Anchor point="TOPLEFT" relativeTo="$(parent)TEXTX" relativePoint="BOTTOMLEFT" />
-
-          <Controls>
-            <Label name="TESTXY2" font="ZoFontGame" text="Click me #2">
-              <Anchor point="TOPLEFT" relativeTo="$(parent)TEXTX" relativePoint="TOPLEFT" />
-            </Label>
-          </Controls>
-          <!-- Textures - mouseOverColor?-->
-          <OnClicked>d('Clicked2222')</OnClicked><!-- Work if You dont click exactly -->
-        </Button>
-
-         <Button name="$(parent)TEXTX3">
-          <Dimensions x="20" y="20" />
-          <Anchor point="TOPLEFT" relativeTo="$(parent)TEXTX2" relativePoint="BOTTOMLEFT" />
-
-          <Controls>
-            <Label name="TESTXY3" font="ZoFontGame" text="Click me #3">
-              <Anchor point="TOPLEFT" relativeTo="$(parent)TEXTX2" relativePoint="TOPLEFT" />
-            </Label>
-          </Controls>
-          <!-- Textures - mouseOverColor?-->
-          <OnClicked>d('Clicked333')</OnClicked><!-- Work if You dont click exactly -->
-        </Button>
-
-         <Button name="$(parent)TEXTX4">
-          <Dimensions x="20" y="20" />
-          <Anchor point="TOPLEFT" relativeTo="$(parent)TEXTX3" relativePoint="BOTTOMLEFT" />
-
-          <Controls>
-            <Label name="TESTXY4" font="ZoFontGame" text="Click me #4">
-              <Anchor point="TOPLEFT" relativeTo="$(parent)TEXTX3" relativePoint="TOPLEFT" />
-            </Label>
-          </Controls>
-          <!-- Textures - mouseOverColor?-->
-          <OnClicked>d('Clicked444')</OnClicked><!-- Work if You dont click exactly -->
-        </Button>
-
         <Backdrop name="$(parent)Right" edgeColor="00FF00" centerColor="95ED64" alpha="0.6" inherits="ZO_DefaultBackdrop">
           <DimensionConstraints minX="200" />
           <Anchor point="TOPLEFT" relativeTo="$(parent)Left" relativePoint="TOPRIGHT" />
           <Anchor point="BOTTOMRIGHT" relativeTo="$(parent)" relativePoint="BOTTOMRIGHT" />                        
         </Backdrop>
 
+        <Scroll name="$(parent)Ele" mouseEnabled="true">
+          <Dimensions x="20" />
+          <Anchor point="TOPLEFT" relativeTo="$(parent)" relativePoint="BOTTOMLEFT"/>
+          <Controls>
+            <Control name="$(parent)EleContainer" resizeToFitDescendents="true">
+
+              <Controls>
+                <Texture name="$(parent)ActiveBg" color="99000000" layer="BACKGROUND">
+                </Texture>
+              </Controls>
+            </Control>
+          </Controls>
+        </Scroll>
 
       </Controls>
     </TopLevelControl>

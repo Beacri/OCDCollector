@@ -147,45 +147,7 @@ function OCDCollectorScan()
 	table.insert(OCDCollector.SUM, {Name = "Mount Training", Icon1 = "esoui/art/treeicons/store_indexicon_mounts_up.dds", Icon2 = "", Icon3 = "", Val = MountStats, Max = MountStatsMax })
 
 
--- Skills to Max
--- for i=1,GetNumSkillTypes(),1 do
--- 	d("Skillline: "..i)
--- 	for j=1,30,1 do --TODO: hwo to get skilllines
--- 		local X = GetSkillLineName(i,j)
--- 		if X then
--- 			d("   "..GetSkillLineName(i,j))
--- 		end
-		 
--- 	end
--- end
-
--- GetNumSkillAbilities(number SkillType skillType, number skillLineIndex)
--- Returns: number numAbilities 
--- SKILL_TYPE_ARMOR	3
--- SKILL_TYPE_AVA	6
--- SKILL_TYPE_CHAMPION	9
--- SKILL_TYPE_CLASS	1
--- SKILL_TYPE_GUILD	5
--- SKILL_TYPE_NONE	0
--- SKILL_TYPE_RACIAL	7
--- SKILL_TYPE_TRADESKILL	8
--- SKILL_TYPE_WEAPON	2
--- SKILL_TYPE_WORLD	4 
-
--- for a=0,30,1 do
--- 	d(GetNumSkillAbilities(0,a))
--- end
-
--- GetNumSkillAbilities(number SkillType skillType, number skillLineIndex)
--- Returns: number numAbilities 
--- GetNumSkillLines(number SkillType skillType)
--- Returns: number numSkillLines 
-
--- Search on ESOUI Source Code GetNumSkillTypes()
--- Returns: number numSkillTypes 
-
-
-
+--Skills to Max
 
 -- Research
 
@@ -285,19 +247,30 @@ function OCDTooltipHide(id)
 	id:GetParent():GetNamedChild("TOOLTIP"):SetHidden(true)
 end
 function OCDCollectorSpanCat()
-	for i = 1, 3 do
-		d(i)
-		local last = last or OCDDashLeft
-		local dynC = WINDOW_MANAGER:CreateControlFromVirtual("ABCDE", OCDDashLeft, "OCDMenu", i)
-		d(dynC)
-		dynC:SetAnchor(TOPLEFT, last, BOTTOMLEFT, 0, 0)
-		local label = dynC:GetNamedChild("_Label")
-		d(label)
-		dynC:SetAnchor(TOPLEFT, label, TOPLEFT, 0, 0)
-		local tmp = "ABCDE2Label"
-		local tmp2 = "TEST string #"..tostring(i)
-		label:SetText(tmp2)
+	local last = OCDDashLeft
+	
+	for i,j in pairs(OCDCollector.SUM) do
+		local line = WINDOW_MANAGER:CreateControlFromVirtual("DashCat", OCDDashLeft, "LeftCat", i)
+		line.label = line:GetNamedChild("Label")
+		line.label:SetText(j.Name)
+		line.icon  = line:GetNamedChild("Icon")
+		line.icon:SetNormalTexture(j.Icon1)
 
+		if j.Icon2 ~= nil then
+			line.icon:SetMouseOverTexture(j.Icon2)
+		end
+		if j.Icon2 ~= nil then
+			line.icon:SetPressedTexture(j.Icon3)
+		end
+
+		if i==1 then
+			line.icon:SetAnchor(TOPLEFT, last, TOPLEFT, 0,0)
+			line.label:SetAnchor(LEFT, line.icon, RIGHT, 0,0)
+		else
+			line.icon:SetAnchor(TOPLEFT, last.icon, BOTTOMLEFT, 0,0)
+			line.label:SetAnchor(LEFT, line.icon, RIGHT, 0,0)
+		end
+		last = line
 	end
 end
 
@@ -408,7 +381,8 @@ LAM2:RegisterOptionControls("OCDCollectorSettings", optionsData)
 end
 function OCDCollector.ShowCollectibles()
 	d("--Show Collectibes--")
-	OCDDash:SetHidden(false)
+	OCDDash:SetHidden(true)
+	OCDCollectorSpanCat()
 end
 
 function OCDCollector.HideCollectibles()
@@ -418,10 +392,8 @@ end
 function OCDCollector.SaveSettings()
 	OCDCollector.savedVariables.Left = -1 * GuiRoot:GetRight() + OCDShort:GetRight()
 	OCDCollector.savedVariables.Top = OCDShort:GetTop()
-	d("**onExit")
-	d(OCDCollector.savedVariables.ShortShow)
-
 end
+
 function OCDCollectorLoadSettings()
 	OCDShort:ClearAnchors()
 	OCDShort:SetAnchor(TOPRIGHT, GuiRoot, TOPRIGHT, OCDCollector.savedVariables.Left, OCDCollector.savedVariables.Top)
@@ -448,6 +420,7 @@ function OCDCollector.OnAddOnLoaded(event, addonName)
 		OCDCollectorLoadSettings()
 		OCDCollectorScan()
 		OCDCollectorBuildAddonSettingsMenu()
+		--OCDCollector.ShowCollectibles()
 		d("OCD Collector finished")
 end
 

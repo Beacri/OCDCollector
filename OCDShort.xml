@@ -29,7 +29,7 @@
       <Controls>
         <Backdrop name="$(parent)BGBIG" centerColor="171717" mouseEnabled="true" edgeColor="00FFFF00" alpha="1" excludeFromResizeToFitExtents="true">
           <Anchor point="TOPRIGHT" relativeTo="$(parent)BG" relativePoint="TOPLEFT"/>
-          <OnInitialized>d(OCDCollector.savedVariables)</OnInitialized>
+          <OnInitialized></OnInitialized>
           <Dimensions x="60" y="60" />
         </Backdrop>
         <Label name="$(parent)SUMMARY" font="ZoFontChat" text="0 %" excludeFromResizeToFitExtents="true">

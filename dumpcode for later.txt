@@ -1,0 +1,91 @@
+-- GetNumSkillTypes() returns 9 but lastis empty and first is class
+-- for i=1,GetNumSkillTypes()-1,1 do -- -1 because last Skill type is empty
+-- 	d("Skillline: "..i)
+-- 	local j = 1
+-- 	local k =""
+	
+-- 	for i = 1,8 do
+-- 	local lastRankXP,  nextRankXP, currentXP= GetSkillLineXPInfo(i, 2)
+-- 	d(lastRankXP.."/"..currentXP)
+--  	end
+
+-- 	repeat
+-- 		k = GetSkillLineName(i,j)
+-- 		d(k.." "..tostring(i).." "..tostring(j))
+-- 		j = j + 1
+-- 	until(tostring(k) == "" or j>30)
+-- end
+
+
+--
+
+-- local abilityId = 29338 -- anulment
+-- local abilityId = 38814 -- dizzying strike
+-- GetAbilityIcon(number abilityId) 
+-- GetAbilityName(number abilityId) 
+local x = {38814,39980,39976,39984}
+for i,j in pairs(x) do
+	local y,a,b,c,p,q = GetAbilityProgressionXPInfoFromAbilityId(j)
+	d(i..": "..tostring(y).." "..tostring(a).." "..tostring(b).." "..tostring(c).." "..tostring(p).." "..tostring(q))
+end
+-- /script d( GetAbilityProgressionXPInfoFromAbilityId(39984))
+-- --		GetAbilityProgressionXPInfoFromAbilityId
+-- --     Returns: boolean hasProgression, number progressionIndex, number lastRankXp, number nextRankXP, number currentXP, boolean atMorph 
+
+-- /script d(GetSkillLineProgressionAbilityRank(3,1,1,2))
+
+
+--
+     -- GetProgressionSkillProgressionId(number SkillType skillType, number skillLineIndex, number skillIndex)
+     --    Returns: number progressionId 
+     local SkillDataBase = {
+     		{
+     			BaseName = "Skill",
+     			Morph1Name = "Morph 1",
+     			Morph2Name = "Morph 2",
+     			lvl = "1/4"
+     		}
+ 		}
+ 	local TotalSkillBase = {
+ 	{--i = 1, class skills
+	 	{--j=1 - Assasination (NB)
+	 		{--k=1 Incap
+	 			id = 36508
+	 			
+	 		}
+	 	},
+	 	{--j=2 - Shadow (NB)
+
+	 	},
+	  	{--j=2 - Siphoning (NB)
+
+	 	}
+
+ 	}
+ }
+--local classSkillline = SKILL_TYPE_CLASS -- type = 1
+
+-- GetNumSkillAbilities(number SkillType skillType, number skillLineIndex)
+-- Returns: number numAbilities 
+-- SKILL_TYPE_ARMOR	3
+-- SKILL_TYPE_AVA	6
+-- SKILL_TYPE_CHAMPION	9
+-- SKILL_TYPE_CLASS	1
+-- SKILL_TYPE_GUILD	5
+-- SKILL_TYPE_NONE	0
+-- SKILL_TYPE_RACIAL	7
+-- SKILL_TYPE_TRADESKILL	8
+-- SKILL_TYPE_WEAPON	2
+-- SKILL_TYPE_WORLD	4 
+
+-- for a=0,30,1 do
+-- 	d(GetNumSkillAbilities(0,a))
+-- end
+
+-- GetNumSkillAbilities(number SkillType skillType, number skillLineIndex)
+-- Returns: number numAbilities 
+-- GetNumSkillLines(number SkillType skillType)
+-- Returns: number numSkillLines 
+
+-- Search on ESOUI Source Code GetNumSkillTypes()
+-- Returns: number numSkillTypes 
