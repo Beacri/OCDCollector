@@ -253,8 +253,10 @@ function OCDCollectorScan()
 end
 
 function OCDShortPrepareArray()
+
 	local tmp = {}
-	local ShortOrder = {3,4,5,6,7,8,9,10,12,13,14,15,16,18,19}
+
+	local ShortOrder = OCDCollector.savedVariables.ShortShow
 	for k,v in pairs(ShortOrder) do
 		--d(tostring(v).." "..OCDCollector["SUM"][v]["Name"])
 		table.insert(tmp, OCDCollector["SUM"][v])
@@ -302,6 +304,24 @@ end
 function OCDCollectorBuildAddonSettingsMenu()
 local LAM2 = LibStub("LibAddonMenu-2.0")
 
+function SetShortIcons(str)
+	local tmp = {}
+
+	for i in string.gmatch(str, "%S+") do
+		if tonumber(i) ~= nil then
+			table.insert(tmp, tonumber(i))
+		end
+	end
+	d("+++++++++++++++")
+	d(tmp)
+	d("----")
+	d(OCDCollector.savedVariables.ShortShow)
+	OCDCollector.savedVariables.ShortShow = tmp
+	d("----")
+	d(OCDCollector.savedVariables.ShortShow)
+	return tmp
+end
+
 local panelData = {
          type = "panel",
          name = "OCD Collector",
@@ -328,19 +348,35 @@ local optionsData = {
 		name = "Show/Hide Progression Icon",
 	}}
 
-	for j=1,20,1 do
+	for j,k in pairs(OCDCollector.SUM) do
 		table.insert(optionsData, {
 			type = "checkbox",
-			name = "Type "..j,
-			tooltip = "Type "..j,
+			name = "#"..j.." "..k.Name,
+			tooltip = "If ON \""..k.Name.."\" category will be counted in calculating total progression",
 			getFunc = function() return true end,
 			setFunc = function(value) d(value) end,
 		})
+
 	end
 
 
-
 optionsData2={
+	{
+	type = "editbox",
+	name = "Order",
+	tooltip = "Set the order on on-screen summary",
+	getFunc = function() return table.concat(OCDCollector.savedVariables.ShortShow, " ") end,
+	setFunc = function(text) SetShortIcons(text) end,
+	isMultiline = false,
+	width = "full",
+	requiresReload = true,
+	},
+	{
+    type = "button",
+    name = "Reload UI",
+    func = function() ReloadUI() end,
+    tooltip = "Button's tooltip text.", -- string id or function returning a string (optional)
+	},
 	{
 		type ="divider",
 		width = "full"
@@ -377,6 +413,7 @@ optionsData2={
 	for i in pairs(optionsData2) do
 	table.insert(optionsData, optionsData2[i])
 	end
+
 LAM2:RegisterAddonPanel("OCDCollectorSettings", panelData)
 LAM2:RegisterOptionControls("OCDCollectorSettings", optionsData)
 
@@ -394,7 +431,7 @@ function OCDCollector.SaveSettings()
 	OCDCollector.savedVariables.Left = -1 * GuiRoot:GetRight() + OCDShort:GetRight()
 	OCDCollector.savedVariables.Top = OCDShort:GetTop()
 	d("**onExit")
-	d(GuiRoot:GetRight() - OCDShort:GetRight())
+	d(OCDCollector.savedVariables.ShortShow)
 
 end
 function OCDCollectorLoadSettings()
@@ -407,15 +444,15 @@ function OCDCollector.OnAddOnLoaded(event, addonName)
 	if (addonName ~= "OCDCollector") then return end
 		d("OCD Collector started")
 
-		OCDCollector.savedVariables = ZO_SavedVars:NewAccountWide("OCDCollector", 1, nil, {i=1})
-		
-		d(OCDCollector.savedVariables.i)
-		
-		OCDCollector.savedVariables.i = OCDCollector.savedVariables.i +1 
-		d(OCDCollector.savedVariables.i)
-		d("------")
-		d(OCDCollector.savedVariables.Left)
-		d(OCDCollector.savedVariables.Top)
+		OCDCollector.savedVariables = ZO_SavedVars:NewAccountWide("OCDCollector", 1, nil, 
+			{
+			Left = 0,
+			Top = 0,
+			--ShortShow = {3,4,5,6,7,8,9,10,12,13,14,15,16,18,19} --idk why it doesnt work
+			})
+		if OCDCollector.savedVariables.ShortShow == nil then
+			OCDCollector.savedVariables.ShortShow = {3,4,5,6,7,8,9,10,12,13,14,15,16,18,19}
+		end
 		
 		OCDCollectorLoadSettings()
 		OCDCollectorScan()
