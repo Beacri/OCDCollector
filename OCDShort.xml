@@ -29,17 +29,19 @@
       <Controls>
         <Backdrop name="$(parent)BGBIG" centerColor="171717" mouseEnabled="true" edgeColor="00FFFF00" alpha="1" excludeFromResizeToFitExtents="true">
           <Anchor point="TOPRIGHT" relativeTo="$(parent)BG" relativePoint="TOPLEFT"/>
+          <OnInitialized>d(OCDCollector.savedVariables)</OnInitialized>
           <Dimensions x="60" y="60" />
         </Backdrop>
-        <Label name="$(parent)SUMMARY" font="ZoFontChat" text="20.3%" excludeFromResizeToFitExtents="true">
+        <Label name="$(parent)SUMMARY" font="ZoFontChat" text="0 %" excludeFromResizeToFitExtents="true">
           <Anchor point="CENTER" relativeTo="$(parent)BGBIG" relativePoint="CENTER"/>
+          <OnInitialized></OnInitialized>
         </Label>
       </Controls>
 
     </TopLevelControl>
   </Controls>
 </GuiXml>
-<!-- 
+<!--
 esoui/art/journal/journal_tabicon_achievements_over.dds - achievements
 esoui/art/tradinghouse/tradinghouse_browse_tabicon_over.dds - lupa
 esoui/art/treeicons/store_indexicon_mounts_over.dds - mounty

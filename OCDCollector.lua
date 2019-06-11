@@ -312,13 +312,6 @@ function SetShortIcons(str)
 			table.insert(tmp, tonumber(i))
 		end
 	end
-	d("+++++++++++++++")
-	d(tmp)
-	d("----")
-	d(OCDCollector.savedVariables.ShortShow)
-	OCDCollector.savedVariables.ShortShow = tmp
-	d("----")
-	d(OCDCollector.savedVariables.ShortShow)
 	return tmp
 end
 
@@ -334,10 +327,11 @@ local optionsData = {
 	},
 	{
 		type = "checkbox",
-		name = "Merge Collectibles",
-		tooltip = "If ON it will show only Sum of collected collectibles",
-		getFunc = function() return true end,
-		setFunc = function(value) d(value) end,
+		name = "Show % of total progression",
+		tooltip = "If ON it will show % of total progression",
+		getFunc = function() return OCDCollector.savedVariables.ShowTotalProcent end,
+		 
+		setFunc = function(value) d(value) OCDCollector.savedVariables.ShowTotalProcent=value OCDShortBGBIG:SetHidden(not value) OCDShortSUMMARY:SetHidden(not value) end,
 	},
 	{
 		type ="divider",
@@ -370,12 +364,6 @@ optionsData2={
 	isMultiline = false,
 	width = "full",
 	requiresReload = true,
-	},
-	{
-    type = "button",
-    name = "Reload UI",
-    func = function() ReloadUI() end,
-    tooltip = "Button's tooltip text.", -- string id or function returning a string (optional)
 	},
 	{
 		type ="divider",
@@ -437,6 +425,8 @@ end
 function OCDCollectorLoadSettings()
 	OCDShort:ClearAnchors()
 	OCDShort:SetAnchor(TOPRIGHT, GuiRoot, TOPRIGHT, OCDCollector.savedVariables.Left, OCDCollector.savedVariables.Top)
+	OCDShortBGBIG:SetHidden(not ShowTotalProcent)
+	OCDShortSUMMARY:SetHidden(not ShowTotalProcent)
 
 end
 
@@ -448,6 +438,7 @@ function OCDCollector.OnAddOnLoaded(event, addonName)
 			{
 			Left = 0,
 			Top = 0,
+			ShowTotalProcent = true
 			--ShortShow = {3,4,5,6,7,8,9,10,12,13,14,15,16,18,19} --idk why it doesnt work
 			})
 		if OCDCollector.savedVariables.ShortShow == nil then
